@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: menorcaboats-blocks — CGB Gutenberg Block Plugin
- * Plugin URI: https://github.com/ahmadawais/create-guten-block/
- * Description: menorcaboats-blocks — is a Gutenberg plugin created via create-guten-block.
- * Author: mrahmadawais, maedahbatool
- * Author URI: https://AhmadAwais.com/
- * Version: 1.0.0
+ * Plugin Name: Menorcaboats Custom Blocks
+ * Plugin URI: https://github.com/miguelllufriu/menorcaboats_custom_blocks
+ * Description: Menorcaboats Custom Blocks provides custom blocks for Gutenberg editor.
+ * Author: Miquel Llufriu
+ * Author URI: https://github.com/miguelllufriu
+ * Version: 0.0.1
  * License: GPL2+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
  *

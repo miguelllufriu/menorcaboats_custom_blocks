@@ -1,11 +1,12 @@
 /**
- * #.# Styles
+ * #.# Editor Styles
  *
- * CSS for both Frontend+Backend.
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
  */
 
 .wp-block-cgb-block-menorcaboats-blocks  {
-  background: $red;
+  background: $blue;
   border: 0.2rem solid $black;
   color: $black;
   margin: 0 auto;

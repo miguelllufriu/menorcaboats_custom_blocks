@@ -1,15 +1,17 @@
 /**
- * #.# Editor Styles
+ * #.# Styles
  *
- * CSS for just Backend enqueued after style.scss
- * which makes it higher in priority.
+ * CSS for both Frontend+Backend.
  */
 
 .wp-block-cgb-block-menorcaboats-blocks  {
-  background: $green;
+  background: $blue;
   border: 0.2rem solid $black;
   color: $black;
   margin: 0 auto;
   max-width: 740px;
   padding: 2rem;
+  &:hover{
+    background: $green;
+  }
 }

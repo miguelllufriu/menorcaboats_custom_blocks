@@ -11,6 +11,7 @@ import './editor.scss';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
+const { RichText } = wp.editor;
 
 /**
  * Register: aa Gutenberg Block.
@@ -27,14 +28,21 @@ const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.b
  */
 registerBlockType( 'cgb/block-menorcaboats-blocks', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'menorcaboats-blocks - CGB Block' ), // Block title.
+	title: __( 'Menorcaboats - Basic block' ), // Block title.
 	icon: 'shield', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
-		__( 'menorcaboats-blocks — CGB Block' ),
-		__( 'CGB Example' ),
-		__( 'create-guten-block' ),
+		__( 'Menorcaboats - Basic block' ),
+		__( 'Menorcaboats basic' ),
+		__( 'Menorcaboats' ),
 	],
+
+	attributes: {
+		title: {
+			type: 'string',
+			selector: 'h1'
+		}
+	},
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -44,22 +52,16 @@ registerBlockType( 'cgb/block-menorcaboats-blocks', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: function( props ) {
+	edit: function( { className, attributes, setAttributes } ) {
 		// Creates a <p class='wp-block-cgb-block-menorcaboats-blocks'></p>.
 		return (
-			<div className={ props.className }>
-				<p>— Hello from the backend.</p>
-				<p>
-					CGB BLOCK: <code>menorcaboats-blocks</code> is a new Gutenberg block
-				</p>
-				<p>
-					It was created via{ ' ' }
-					<code>
-						<a href="https://github.com/ahmadawais/create-guten-block">
-							create-guten-block
-						</a>
-					</code>.
-				</p>
+			<div className={ className }>
+				<RichText
+					tagName="h1"
+					className={ className }
+					value={ attributes.title }
+					onChange={ ( title ) => setAttributes( { title } ) }
+				/>
 			</div>
 		);
 	},
@@ -72,21 +74,10 @@ registerBlockType( 'cgb/block-menorcaboats-blocks', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function( props ) {
+	save: function( {attributes} ) {
 		return (
 			<div>
-				<p>— Hello from the frontend.</p>
-				<p>
-					CGB BLOCK: <code>menorcaboats-blocks</code> is a new Gutenberg block.
-				</p>
-				<p>
-					It was created via{ ' ' }
-					<code>
-						<a href="https://github.com/ahmadawais/create-guten-block">
-							create-guten-block
-						</a>
-					</code>.
-				</p>
+				<RichText.Content tagName="h1" value={attributes.title} />
 			</div>
 		);
 	},

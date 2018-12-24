@@ -11,7 +11,12 @@ import './editor.scss';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
-const { RichText } = wp.editor;
+const { 
+	RichText,
+	MediaUpload
+ 		} = wp.editor;
+
+import { Button } from '@wordpress/components';
 
 /**
  * Register: aa Gutenberg Block.
@@ -41,6 +46,14 @@ registerBlockType( 'cgb/block-menorcaboats-blocks', {
 		title: {
 			type: 'string',
 			selector: 'h1'
+		},
+		imageUrl: {
+			attribute: 'src',
+			selector: '.heroImage'
+		},
+		imageAlt: {
+			attribute: 'alt',
+			selector: '.heroImage'
 		}
 	},
 
@@ -62,6 +75,12 @@ registerBlockType( 'cgb/block-menorcaboats-blocks', {
 					value={ attributes.title }
 					onChange={ ( title ) => setAttributes( { title } ) }
 				/>
+				<MediaUpload
+					onSelect={ media => { setAttributes({ imageAlt: media.alt, imageUrl: media.url }); } }
+					type="image"
+					value={ attributes.imageID }
+					render={ ({ open }) => (<Button onClick={open}>Abrir galería</Button>) }
+				/>	
 			</div>
 		);
 	},
@@ -75,9 +94,11 @@ registerBlockType( 'cgb/block-menorcaboats-blocks', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	save: function( {attributes} ) {
+		console.log(attributes);
 		return (
 			<div>
 				<RichText.Content tagName="h1" value={attributes.title} />
+				<img className=".heroImage" src={attributes.imageUrl} alt={attributes.imageAlt}/>
 			</div>
 		);
 	},

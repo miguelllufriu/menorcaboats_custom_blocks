@@ -13,8 +13,11 @@ const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 const { 
 	RichText,
-	MediaUpload
- 		} = wp.editor;
+	MediaUpload,
+	BlockControls,
+	AlignmentToolbar,
+} = wp.editor;
+		 
 
 import { Button } from '@wordpress/components';
 
@@ -33,19 +36,35 @@ import { Button } from '@wordpress/components';
  */
 registerBlockType( 'cgb/block-menorcaboats-blocks', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Menorcaboats - Basic block' ), // Block title.
+	title: __( 'Menorcaboats - Landing block' ), // Block title.
 	icon: 'shield', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
-		__( 'Menorcaboats - Basic block' ),
-		__( 'Menorcaboats basic' ),
+		__( 'Menorcaboats - Landing block' ),
+		__( 'Menorcaboats landing block' ),
 		__( 'Menorcaboats' ),
 	],
+
+	//Supports full alignment
+	supports : {
+		align: true
+	},
 
 	attributes: {
 		title: {
 			type: 'string',
-			selector: 'h1'
+			selector: 'h1',
+			default: 'Introduce aquí el texto...'
+		},
+		subTitle: {
+			type: 'string',
+			selector: 'h3',
+			default: 'Introduce el texto del subtítulo...'
+		},
+		buttonText: {
+			type: 'string',
+			selector: 'p',
+			default: 'Introduce el texto del botón...'
 		},
 		imageUrl: {
 			attribute: 'src',
@@ -54,7 +73,10 @@ registerBlockType( 'cgb/block-menorcaboats-blocks', {
 		imageAlt: {
 			attribute: 'alt',
 			selector: '.heroImage'
-		}
+		},
+		alignment: {
+            type: 'string',
+        }
 	},
 
 	/**
@@ -66,21 +88,65 @@ registerBlockType( 'cgb/block-menorcaboats-blocks', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: function( { className, attributes, setAttributes } ) {
-		// Creates a <p class='wp-block-cgb-block-menorcaboats-blocks'></p>.
+
+		function onChangeAlignment( newAlignment ) {
+            setAttributes( { alignment: newAlignment } );
+        }
+
 		return (
 			<div className={ className }>
-				<RichText
-					tagName="h1"
-					className={ className }
-					value={ attributes.title }
-					onChange={ ( title ) => setAttributes( { title } ) }
-				/>
+				<BlockControls>
+                    <AlignmentToolbar
+                        value={ attributes.alignment }
+                        onChange={ onChangeAlignment }
+                    />
+                </BlockControls>
+				<div className="landingContentContainer">
+					<div className="textContainer">
+						<RichText
+							className="landingText"
+							tagName="h1"
+							className={ className }
+							value={ attributes.title }
+							style={ { textAlign: attributes.alignment } }
+							onChange={ ( title ) => setAttributes( { title } ) }
+						/>
+						<RichText
+							className="subtitleText"
+							tagName="h3"
+							className={ className }
+							value={ attributes.subTitle }
+							style={ { textAlign: attributes.alignment } }
+							onChange={ ( subTitle ) => setAttributes( { subTitle } ) }
+						/>
+						<Button>
+							<RichText
+								className="buttonText"
+								tagName="p"
+								className={ className }
+								value={ attributes.buttonText }
+								style={ { textAlign: attributes.alignment } }
+								onChange={ ( buttonText ) => setAttributes( { buttonText } ) }
+							/>
+						</Button>
+					</div>
+					
+				</div>
+				<div className="landingImageContainer">
 				<MediaUpload
 					onSelect={ media => { setAttributes({ imageAlt: media.alt, imageUrl: media.url }); } }
 					type="image"
 					value={ attributes.imageID }
-					render={ ({ open }) => (<Button onClick={open}>Abrir galería</Button>) }
+					render={ ({ open }) => {
+							if (attributes.imageUrl != undefined) {
+								return (<img className="heroImage" src={attributes.imageUrl} alt={attributes.imageAlt} onClick={open}/>) 
+							}else{
+								return (<Button onClick={open}>Subir imagen</Button>) 
+							}
+						}	
+					}
 				/>	
+				</div>
 			</div>
 		);
 	},
@@ -94,11 +160,18 @@ registerBlockType( 'cgb/block-menorcaboats-blocks', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	save: function( {attributes} ) {
-		console.log(attributes);
 		return (
-			<div>
-				<RichText.Content tagName="h1" value={attributes.title} />
-				<img className=".heroImage" src={attributes.imageUrl} alt={attributes.imageAlt}/>
+			<div className="landingWrapper">
+				<div className="landingContentContainer">
+					<div className="textContainer">
+						<RichText.Content className="landingText" tagName="h1" value={attributes.title} />
+						<RichText.Content className="subtitleText" tagName="h3" value={attributes.subTitle} />
+						<button>{attributes.buttonText}</button>
+					</div>
+				</div>
+				<div className="landingImageContainer">
+					<img className="heroImage" src={attributes.imageUrl} alt={attributes.imageAlt}/>
+				</div>
 			</div>
 		);
 	},

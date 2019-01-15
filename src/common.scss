@@ -5,10 +5,15 @@
  * that are used across the project.
 */
 
+@font-face {
+    font-family: 'GothamRoundedBold';
+    src: url('./fonts/GothamRounded-Bold.otf');
+}
+
 // Colors.
-$black: rgb(41, 41, 41);
-$white: #f4f4f4;
-$gray: #dedede;
-$green: #bada55;
-$red: orangered;
-$blue: blue;
+$primary: #082642;
+$secondary: #1481CE;
+$hint:#03A9F4;
+$buttonColor: #1481CE;
+$fontColor: #A1A4B1;
+$buttonFont: 'GothamRoundedBold';

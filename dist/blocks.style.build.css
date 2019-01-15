@@ -4,17 +4,54 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+@font-face {
+  font-family: 'GothamRoundedBold';
+  src: url("./fonts/GothamRounded-Bold.otf"); }
+
 /**
  * #.# Styles
  *
  * CSS for both Frontend+Backend.
  */
 .wp-block-cgb-block-menorcaboats-blocks {
-  background: blue;
-  border: 0.2rem solid #292929;
-  color: #292929;
+  color: #082642;
   margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem; }
-  .wp-block-cgb-block-menorcaboats-blocks:hover {
-    background: #bada55; }
+  max-width: 100vw;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center; }
+  .wp-block-cgb-block-menorcaboats-blocks > .landingContentContainer {
+    -ms-flex: 1;
+        flex: 1;
+    width: 49%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+        align-items: center; }
+    .wp-block-cgb-block-menorcaboats-blocks > .landingContentContainer > .textContainer {
+      margin: 0 auto;
+      max-width: 75%; }
+      .wp-block-cgb-block-menorcaboats-blocks > .landingContentContainer > .textContainer > h1 {
+        color: #082642; }
+      .wp-block-cgb-block-menorcaboats-blocks > .landingContentContainer > .textContainer > h3 {
+        color: #A1A4B1;
+        font-weight: 300; }
+      .wp-block-cgb-block-menorcaboats-blocks > .landingContentContainer > .textContainer > button {
+        background-color: #1481CE;
+        color: white;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        font-family: "GothamRoundedBold";
+        text-transform: uppercase;
+        width: 260px;
+        height: 48px; }
+  .wp-block-cgb-block-menorcaboats-blocks > .landingImageContainer {
+    -ms-flex: 1;
+        flex: 1;
+    width: 49%; }
+
+.entry-footer {
+  background-color: white; }
